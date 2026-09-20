@@ -1,6 +1,6 @@
 # 🔍 Fake News Detection
 
-> **NLP Dersi Projesi** — BERT tabanlı derin öğrenme ile haberlerin gerçek veya sahte olarak sınıflandırılması.
+
 
 Bu proje, **Doğal Dil İşleme (NLP)** ve **Transformer tabanlı derin öğrenme** teknikleri kullanılarak haber metinlerinin gerçek veya sahte olup olmadığını sınıflandırmak amacıyla geliştirilmiştir.
 
@@ -513,7 +513,7 @@ Proje daha ileri seviyeye taşınmak istenirse:
 
 # 👩‍💻 Proje Bilgileri
 
-**NLP Dersi Projesi**
+
 
 **Betül Sarı**
 Computer Engineering Student
