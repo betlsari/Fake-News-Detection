@@ -1,243 +1,209 @@
-# 🔍 Sahte Haber Tespiti (Fake News Detection)
+# 🔍 Fake News Detection
 
-**NLP Dersi Projesi** - BERT Tabanlı Derin Öğrenme ile Sahte Haber Sınıflandırma
+> **NLP Dersi Projesi** — BERT tabanlı derin öğrenme ile haberlerin gerçek veya sahte olarak sınıflandırılması.
 
----
+Bu proje, **Doğal Dil İşleme (NLP)** ve **Transformer tabanlı derin öğrenme** teknikleri kullanılarak haber metinlerinin gerçek veya sahte olup olmadığını sınıflandırmak amacıyla geliştirilmiştir.
 
-## 📋 İçindekiler
-
-- [Proje Hakkında](#proje-hakkında)
-- [Özellikler](#özellikler)
-- [Teknolojiler](#teknolojiler)
-- [Kurulum](#kurulum)
-- [Kullanım](#kullanım)
-- [Veri Seti](#veri-seti)
-- [Model Mimarisi](#model-mimarisi)
-- [Sonuçlar](#sonuçlar)
-- [Proje Yapısı](#proje-yapısı)
+Projenin temelinde **BERT (Bidirectional Encoder Representations from Transformers)** mimarisi ve **PyTorch** kullanılmaktadır.
 
 ---
 
-## 🎯 Proje Hakkında
+## 📌 Proje Hakkında
 
-Bu proje, doğal dil işleme (NLP) ve derin öğrenme teknikleri kullanarak haberlerin gerçek mi sahte mi olduğunu tespit eden bir sistemdir. BERT (Bidirectional Encoder Representations from Transformers) modeli kullanılarak metinlerin anlamsal özelliklerini çıkarır ve sınıflandırma yapar.
+Sahte haberler, özellikle sosyal medya ve çevrim içi haber platformlarının yaygınlaşmasıyla önemli bir problem haline gelmiştir. Bu projede, haber metinlerinden yararlanarak otomatik bir **Fake News Detection** sistemi geliştirilmiştir.
 
-### Amaç
-- Sosyal medya ve haber platformlarındaki sahte haberleri otomatik olarak tespit etmek
-- NLP ve derin öğrenme tekniklerini pratikte uygulamak
-- BERT gibi modern transformer modellerini kullanmayı öğrenmek
+Sistem;
+
+* Haber metnini alır
+* Metni ön işler
+* BERT tokenizer ile metni tokenize eder
+* BERT modelinden anlamsal özellikleri çıkarır
+* Sınıflandırma katmanı üzerinden tahmin üretir
+* Haberi **Real (Gerçek)** veya **Fake (Sahte)** olarak sınıflandırır
+
+### 🎯 Projenin Amaçları
+
+* NLP tekniklerini uygulamalı olarak öğrenmek
+* Transformer mimarisini ve BERT modelini kullanmak
+* Metin sınıflandırma problemi üzerinde çalışmak
+* Derin öğrenme ile gerçek/sahte haber ayrımı yapmak
+* Model performansını farklı metriklerle değerlendirmek
 
 ---
 
 ## ✨ Özellikler
 
-- ✅ **Otomatik Metin Temizleme**: URL, emoji, özel karakterlerin kaldırılması
-- ✅ **BERT Tabanlı Sınıflandırma**: State-of-the-art transformer modeli
-- ✅ **Kapsamlı Ön İşleme**: NLTK ve SpaCy ile metin normalizasyonu
-- ✅ **Görselleştirme**: Eğitim grafikleri ve confusion matrix
-- ✅ **Kolay Kullanım**: Komut satırı arayüzü ile basit eğitim ve tahmin
-- ✅ **Esnek Yapı**: Farklı BERT varyantları kullanabilme (BERTurk, DistilBERT, vb.)
+* 🧹 **Metin Ön İşleme**
+  URL, özel karakter ve gereksiz metin öğelerinin temizlenmesi
+
+* 🤖 **BERT Tabanlı Sınıflandırma**
+  Transformer tabanlı BERT modeli ile metin sınıflandırma
+
+* 📊 **Model Değerlendirme**
+  Accuracy, Precision, Recall ve F1-Score metrikleri
+
+* 📈 **Eğitim Görselleştirmesi**
+  Training/validation loss ve accuracy grafiklerinin oluşturulması
+
+* 🔲 **Confusion Matrix**
+  Modelin doğru ve yanlış sınıflandırmalarının görselleştirilmesi
+
+* 🎯 **Tek Metin Tahmini**
+  Kullanıcının girdiği bir haber metni üzerinde tahmin yapılabilmesi
+
+* ⚙️ **Esnek Eğitim Yapısı**
+  Epoch, batch size, learning rate ve max sequence length gibi parametrelerin değiştirilebilmesi
+
+* 🖥️ **GPU Desteği**
+  CUDA destekli sistemlerde GPU kullanımının otomatik olarak algılanması
 
 ---
 
-## 🛠 Teknolojiler
+## 🛠️ Kullanılan Teknolojiler
 
-### Python Kütüphaneleri
+| Teknoloji / Kütüphane         | Kullanım Alanı                            |
+| ----------------------------- | ----------------------------------------- |
+| **Python**                    | Ana programlama dili                      |
+| **PyTorch**                   | Derin öğrenme ve model eğitimi            |
+| **Hugging Face Transformers** | BERT ve tokenizer                         |
+| **NLTK**                      | Doğal dil işleme ve metin ön işleme       |
+| **spaCy**                     | NLP işlemleri                             |
+| **Pandas**                    | Veri işleme                               |
+| **NumPy**                     | Sayısal işlemler                          |
+| **Scikit-learn**              | Veri bölme ve değerlendirme metrikleri    |
+| **Matplotlib**                | Veri görselleştirme                       |
+| **Seaborn**                   | Grafik ve confusion matrix görselleştirme |
 
-| Kütüphane | Versiyon | Kullanım Amacı |
-|-----------|----------|----------------|
-| **PyTorch** | 2.0.1 | Derin öğrenme framework'ü |
-| **Transformers** | 4.31.0 | BERT model ve tokenizer'lar |
-| **NLTK** | 3.8.1 | Metin ön işleme |
-| **SpaCy** | 3.6.0 | İleri seviye NLP |
-| **Pandas** | 2.0.3 | Veri manipülasyonu |
-| **NumPy** | 1.24.3 | Nümerik hesaplamalar |
-| **Scikit-learn** | 1.3.0 | Metrikler ve veri bölme |
-| **Matplotlib/Seaborn** | 3.7.2/0.12.2 | Görselleştirme |
+### 🤖 Kullanılabilen Modeller
 
-### Kullanılan Modeller
+Proje yapısı farklı Transformer modelleriyle çalışabilecek şekilde tasarlanmıştır.
 
-- **bert-base-uncased**: Temel İngilizce BERT modeli
-- **BERTurk** (opsiyonel): Türkçe metinler için
-- **DistilBERT** (opsiyonel): Daha hızlı ve hafif versiyon
+Örnek modeller:
+
+* `bert-base-uncased`
+* `distilbert-base-uncased`
+* `dbmdz/bert-base-turkish-cased`
+* `bert-large-uncased`
 
 ---
 
-## 🚀 Kurulum
+# 🚀 Kurulum
 
-### 1. Repoyu İndir veya Klasör Oluştur
+## 1. Repoyu Klonlama
 
 ```bash
-# Proje klasörünü oluştur
-mkdir fake-news-detection
-cd fake-news-detection
-
-# Proje yapısını oluştur
-mkdir -p data/raw data/processed models notebooks src
+git clone https://github.com/betlsari/Fake-News-Detection.git
+cd Fake-News-Detection
 ```
 
-### 2. Virtual Environment Oluştur (Önerilen)
+## 2. Virtual Environment Oluşturma
+
+### Windows
 
 ```bash
-# Windows
 python -m venv venv
 venv\Scripts\activate
+```
 
-# Mac/Linux
+### macOS / Linux
+
+```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-### 3. Gerekli Kütüphaneleri Yükle
+## 3. Gerekli Kütüphaneleri Yükleme
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. NLTK Verilerini İndir
+## 4. NLTK Verilerini İndirme
 
 Python konsolunda:
+
 ```python
 import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
-```
 
-### 5. Kaggle API Kurulumu
-
-**a) Kaggle hesabı oluştur:** https://www.kaggle.com
-
-**b) API Token al:**
-- Profil → Settings → API → "Create New API Token"
-- `kaggle.json` dosyası inecek
-
-**c) Token'ı doğru yere koy:**
-```bash
-# Windows
-mkdir %USERPROFILE%\.kaggle
-move kaggle.json %USERPROFILE%\.kaggle\
-
-# Mac/Linux
-mkdir ~/.kaggle
-mv kaggle.json ~/.kaggle/
-chmod 600 ~/.kaggle/kaggle.json
-```
-
-**d) Veri setini indir:**
-```bash
-# WELFake Dataset - 72,134 haber içeriyor
-kaggle datasets download -d saurabhshahane/fake-news-classification
-unzip fake-news-classification.zip -d data/raw/
+nltk.download("punkt")
+nltk.download("stopwords")
+nltk.download("wordnet")
 ```
 
 ---
 
-## 💻 Kullanım
+# 📂 Veri Seti
 
-### Hızlı Başlangıç - Tam Eğitim
+Projede **WELFake Dataset** kullanılmıştır.
 
-```bash
-# Temel eğitim (3 epoch)
-python main.py --mode train
+Veri seti Kaggle üzerinden temin edilmiştir.
 
-# Özelleştirilmiş eğitim
-python main.py --mode train \
-    --epochs 5 \
-    --batch_size 32 \
-    --learning_rate 3e-5 \
-    --max_length 256
-```
+**Veri seti:** WELFake Dataset
+**Toplam haber:** 72.134
+**Dil:** İngilizce
 
-### Hızlı Test İçin Küçük Örnekle Eğitim
+### Sınıflar
 
-```bash
-# İlk test için sadece 1000 örnek kullan
-python main.py --mode train \
-    --sample_size 1000 \
-    --epochs 2 \
-    --batch_size 8
-```
+| Label | Sınıf         |
+| ----: | ------------- |
+|   `0` | Real — Gerçek |
+|   `1` | Fake — Sahte  |
 
-### Model Testi
+### Temel Özellikler
 
-```bash
-# Eğitilmiş modeli test et
-python main.py --mode test
-```
+* `text` — Haber metni
+* `title` — Haber başlığı
+* `label` — Sınıf etiketi
 
-### Tek Metin Tahmini
+### Veri Bölme
 
-```bash
-# Komut satırından
-python main.py --mode predict \
-    --text "Breaking news: Scientists discover new planet!"
+Veri seti eğitim, doğrulama ve test olmak üzere üç bölüme ayrılmıştır:
 
-# İnteraktif mod
-python main.py --mode predict
-# Ardından metni gir
-```
+* **%70** — Training
+* **%15** — Validation
+* **%15** — Test
 
-### Farklı BERT Modelleri Kullanma
-
-```bash
-# DistilBERT (daha hızlı)
-python main.py --mode train --model_name distilbert-base-uncased
-
-# BERTurk (Türkçe için)
-python main.py --mode train --model_name dbmdz/bert-base-turkish-cased
-
-# BERT Large (daha güçlü ama yavaş)
-python main.py --mode train --model_name bert-large-uncased
-```
+> ⚠️ Veri seti boyutu nedeniyle `data/` klasörü GitHub repository'sine dahil edilmemiştir. Projeyi çalıştırmak için veri setinin ayrıca indirilmesi gerekir.
 
 ---
 
-## 📊 Veri Seti
+# 🧠 Model Mimarisi
 
-### WELFake Dataset
+Projenin temelinde BERT tabanlı bir metin sınıflandırma mimarisi bulunmaktadır.
 
-**Kaynak**: [Kaggle - Fake News Classification](https://www.kaggle.com/datasets/saurabhshahane/fake-news-classification)
-
-**İstatistikler:**
-- **Toplam Örnek**: 72,134 haber
-- **Sınıflar**: 
-  - 0: Gerçek haberler (Real)
-  - 1: Sahte haberler (Fake)
-- **Dil**: İngilizce
-- **Özellikler**:
-  - `text`: Haber metni
-  - `title`: Başlık
-  - `label`: Etiket (0/1)
-
-**Veri Bölme:**
-- Eğitim: %70
-- Validasyon: %15
-- Test: %15
-
----
-
-## 🧠 Model Mimarisi
-
-### BERT Mimarisi
-
-```
-Input Text → Tokenization → BERT Encoder → [CLS] Token → Dropout → Linear Layer → Softmax → Prediction
+```text
+                Input Text
+                    │
+                    ▼
+              Tokenization
+                    │
+                    ▼
+              BERT Encoder
+                    │
+                    ▼
+               [CLS] Token
+                    │
+                    ▼
+                 Dropout
+                    │
+                    ▼
+            Classification Layer
+                    │
+                    ▼
+             Real / Fake
 ```
 
-### Detaylı Yapı
+### Model Akışı
 
-1. **Input Layer**: Metin tokenize edilir (max 512 token)
-2. **BERT Encoder**: 
-   - 12 transformer katmanı (base) veya 24 (large)
-   - 768 (base) veya 1024 (large) hidden size
-   - Multi-head attention mechanism
-3. **Pooling**: [CLS] token'ının çıktısı kullanılır
-4. **Dropout**: %30 dropout (overfitting önleme)
-5. **Classification Head**: Linear layer (768 → 2)
-6. **Output**: Softmax ile olasılıklar
+1. Haber metni sisteme girilir.
+2. Metin BERT tokenizer tarafından tokenize edilir.
+3. Tokenlar BERT encoder'a gönderilir.
+4. BERT'in `[CLS]` token çıktısı sınıflandırma için kullanılır.
+5. Dropout katmanı uygulanır.
+6. Linear classification layer ile iki sınıflı tahmin yapılır.
+7. Sonuç **Real** veya **Fake** olarak döndürülür.
 
-### Hiperparametreler
+### Temel Hiperparametreler
 
 ```python
 {
@@ -254,237 +220,340 @@ Input Text → Tokenization → BERT Encoder → [CLS] Token → Dropout → Lin
 
 ---
 
-## 📈 Sonuçlar
+# 💻 Kullanım
 
-### Beklenen Performans
+## 🔹 Eğitim
 
-| Metrik | Değer |
-|--------|-------|
-| **Accuracy** | ~94-96% |
-| **Precision** | ~93-95% |
-| **Recall** | ~94-96% |
-| **F1-Score** | ~94-95% |
+Temel eğitim:
 
-### Çıktı Dosyaları
-
-Eğitim sonrası oluşacak dosyalar:
-
-```
-models/
-├── best_model.pt              # En iyi model ağırlıkları
-
-./ (proje kök dizini)
-├── training_history.png       # Loss ve accuracy grafikleri
-├── confusion_matrix.png       # Karışıklık matrisi
+```bash
+python main.py --mode train
 ```
 
-### Örnek Grafikler
+Özelleştirilmiş eğitim:
 
-**Training History:**
-- Epoch bazında loss ve accuracy değişimi
-- Overfitting kontrolü için train vs validation karşılaştırması
-
-**Confusion Matrix:**
+```bash
+python main.py --mode train \
+    --epochs 5 \
+    --batch_size 32 \
+    --learning_rate 3e-5 \
+    --max_length 256
 ```
-              Gerçek    Sahte
-Gerçek    [   TP         FP   ]
-Sahte     [   FN         TN   ]
+
+### Küçük Veriyle Test
+
+Sistemi hızlıca test etmek için daha küçük bir veri örneği kullanılabilir:
+
+```bash
+python main.py --mode train \
+    --sample_size 1000 \
+    --epochs 2 \
+    --batch_size 8
 ```
 
 ---
 
-## 📁 Proje Yapısı
+## 🔹 Model Testi
 
+Eğitilmiş modeli test etmek için:
+
+```bash
+python main.py --mode test
 ```
-fake-news-detection/
+
+---
+
+## 🔹 Tek Haber Tahmini
+
+Komut satırından doğrudan haber metni göndermek için:
+
+```bash
+python main.py --mode predict \
+    --text "Breaking news: Scientists discover new planet!"
+```
+
+İnteraktif tahmin modu:
+
+```bash
+python main.py --mode predict
+```
+
+Daha sonra terminal üzerinden haber metni girilebilir.
+
+---
+
+## 🔹 Farklı Modellerle Eğitim
+
+### DistilBERT
+
+Daha küçük ve hızlı bir model:
+
+```bash
+python main.py --mode train \
+    --model_name distilbert-base-uncased
+```
+
+### BERTurk
+
+Türkçe metinler üzerinde çalışmak için:
+
+```bash
+python main.py --mode train \
+    --model_name dbmdz/bert-base-turkish-cased
+```
+
+### BERT Large
+
+Daha büyük model:
+
+```bash
+python main.py --mode train \
+    --model_name bert-large-uncased
+```
+
+---
+
+# 📊 Model Değerlendirme
+
+Model performansı aşağıdaki metrikler üzerinden değerlendirilmektedir:
+
+* **Accuracy**
+* **Precision**
+* **Recall**
+* **F1-Score**
+
+Projede ayrıca model davranışını incelemek için:
+
+* Training History
+* Confusion Matrix
+
+oluşturulmaktadır.
+
+### 📈 Eğitim Grafiği
+
+`training_history.png` dosyası eğitim sırasında loss ve accuracy değerlerinin epoch'lara göre değişimini gösterir.
+
+### 🔲 Confusion Matrix
+
+`confusion_matrix.png` dosyası modelin gerçek ve tahmin edilen sınıflar arasındaki dağılımını gösterir.
+
+```text
+                  Tahmin
+              Real      Fake
+
+Gerçek Real     TP        FN
+Gerçek Fake     FP        TN
+```
+
+> Not: Buradaki değerlerin yorumlanması, kullanılan label kodlamasına göre yapılmalıdır.
+
+---
+
+# 📁 Proje Yapısı
+
+```text
+Fake-News-Detection/
 │
 ├── data/
-│   ├── raw/
-│   │   └── WELFake_Dataset.csv        # Ham veri seti
-│   └── processed/                      # İşlenmiş veriler
+│   └── raw/
+│       └── WELFake_Dataset.csv
 │
 ├── models/
-│   └── best_model.pt                   # Eğitilmiş model
+│   └── best_model.pt
 │
 ├── notebooks/
-│   └── exploratory_analysis.ipynb      # (Opsiyonel) Veri analizi
+│   └── exploratory_analysis.py
 │
 ├── src/
-│   ├── __init__.py
-│   ├── data_preprocessing.py           # Veri ön işleme
-│   ├── model.py                        # Model tanımı
-│   └── train.py                        # Eğitim fonksiyonları
+│   ├── data_preprocessing.py
+│   ├── model.py
+│   └── train.py
 │
-├── main.py                             # Ana çalıştırma dosyası
-├── requirements.txt                    # Python bağımlılıkları
-├── README.md                           # Bu dosya
-├── training_history.png                # Eğitim grafikleri
-└── confusion_matrix.png                # Confusion matrix
+├── main.py
+├── requirements.txt
+├── README.md
+├── training_history.png
+├── confusion_matrix.png
+└── .gitignore
 ```
+
+> `data/`, `models/` ve sanal ortam gibi büyük veya yerel dosyalar `.gitignore` ile GitHub dışında tutulmaktadır.
 
 ---
 
-## 🔧 İleri Seviye Özellikler
+# ⚙️ GPU Kullanımı
 
-### 1. Özel Veri Seti Kullanma
+PyTorch, sistemde CUDA destekli bir GPU bulunması durumunda GPU kullanımına izin verir.
 
-Kendi veri setini kullanmak için:
-
-```python
-# CSV formatında veri hazırla
-# Sütunlar: text, label
-
-python main.py --mode train \
-    --data_path path/to/your/data.csv \
-    --text_column your_text_column \
-    --label_column your_label_column
-```
-
-### 2. Model Fine-Tuning
-
-```python
-# Daha fazla epoch ile ince ayar
-python main.py --mode train \
-    --epochs 10 \
-    --learning_rate 1e-5
-```
-
-### 3. GPU Kullanımı
-
-Model otomatik olarak GPU tespit eder. CUDA kuruluysa otomatik kullanır.
+Kontrol etmek için:
 
 ```python
 import torch
-print(torch.cuda.is_available())  # True ise GPU kullanılacak
+
+print(torch.cuda.is_available())
 ```
+
+Sonuç:
+
+```text
+True
+```
+
+ise CUDA destekli GPU kullanılabilir.
 
 ---
 
-## 📝 Kod Örnekleri
+# 🧩 Python ile Kullanım
 
-### Python'dan Kullanım
+Model fonksiyonları Python içerisinden de kullanılabilir.
 
 ```python
 from src.model import get_model_and_tokenizer, predict
 import torch
 
-# Model yükle
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model, tokenizer = get_model_and_tokenizer('bert-base-uncased')
-model.load_state_dict(torch.load('models/best_model.pt'))
+device = torch.device(
+    "cuda" if torch.cuda.is_available() else "cpu"
+)
 
-# Tahmin yap
+model, tokenizer = get_model_and_tokenizer(
+    "bert-base-uncased"
+)
+
+model.load_state_dict(
+    torch.load("models/best_model.pt")
+)
+
 text = "Scientists discover new cure for cancer!"
-prediction, confidence = predict(model, tokenizer, text, device)
 
-print(f"Prediction: {'Fake' if prediction == 1 else 'Real'}")
-print(f"Confidence: {confidence:.2%}")
+prediction, confidence = predict(
+    model,
+    tokenizer,
+    text,
+    device
+)
+
+print(
+    f"Prediction: {'Fake' if prediction == 1 else 'Real'}"
+)
+
+print(
+    f"Confidence: {confidence:.2%}"
+)
 ```
 
 ---
 
-## 🐛 Sorun Giderme
+# 🐛 Sorun Giderme
 
-### Yaygın Hatalar ve Çözümleri
+## CUDA Out of Memory
 
-**1. CUDA out of memory**
+Batch size değerini azaltmayı deneyin:
+
 ```bash
-# Batch size'ı küçült
 python main.py --mode train --batch_size 8
 ```
 
-**2. NLTK data hatası**
+Gerekirse:
+
+```bash
+python main.py --mode train --batch_size 4
+```
+
+## NLTK Veri Hatası
+
+Gerekli NLTK paketlerini tekrar indirin:
+
 ```python
 import nltk
-nltk.download('all')  # Tüm NLTK verilerini indir
+
+nltk.download("punkt")
+nltk.download("stopwords")
+nltk.download("wordnet")
 ```
 
-**3. Kaggle API hatası**
-```bash
-# Token'ı doğru yere koyduğundan emin ol
-ls ~/.kaggle/kaggle.json  # Mac/Linux
-dir %USERPROFILE%\.kaggle\kaggle.json  # Windows
-```
+## Transformers Hatası
 
-**4. Transformers kütüphane hatası**
+Kütüphaneyi güncellemek için:
+
 ```bash
-# Transformers'ı güncelle
 pip install --upgrade transformers
 ```
 
----
+## Kaggle Veri Seti Sorunu
 
-## 📚 Kaynaklar
-
-### Öğrenme Materyalleri
-
-- [BERT Paper](https://arxiv.org/abs/1810.04805) - Orijinal BERT makalesi
-- [Hugging Face Documentation](https://huggingface.co/docs) - Transformers dokümantasyonu
-- [PyTorch Tutorials](https://pytorch.org/tutorials/) - PyTorch öğretici
-- [NLTK Documentation](https://www.nltk.org/) - NLTK rehberi
-
-### Faydalı Linkler
-
-- [Kaggle Competitions](https://www.kaggle.com/competitions?search=fake+news) - Fake news yarışmaları
-- [Papers With Code](https://paperswithcode.com/task/fake-news-detection) - SOTA modeller
-- [Medium Articles](https://medium.com/search?q=fake%20news%20detection%20bert) - Blog yazıları
+Veri setinin `data/raw/` klasöründe bulunduğundan emin olun.
 
 ---
 
-## 🤝 Katkıda Bulunma
+# 🔬 Geliştirme Fikirleri
 
-Bu bir eğitim projesidir. Geliştirme önerileri:
+Proje daha ileri seviyeye taşınmak istenirse:
 
-1. Farklı BERT modelleri deneyin (RoBERTa, ALBERT, etc.)
-2. Ensemble yöntemleri uygulayın
-3. Açıklanabilir AI (XAI) teknikleri ekleyin
-4. Çoklu dil desteği ekleyin
-5. Web arayüzü oluşturun (Streamlit, Flask)
-
----
-
-## 📄 Lisans
-
-Bu proje eğitim amaçlıdır. Ticari kullanım için ilgili kütüphanelerin lisanslarını kontrol edin.
+* [ ] RoBERTa ve ALBERT gibi farklı Transformer modellerini denemek
+* [ ] BERTurk ile Türkçe sahte haber sınıflandırması yapmak
+* [ ] Hyperparameter tuning uygulamak
+* [ ] Explainable AI (XAI) yöntemleri eklemek
+* [ ] Model karşılaştırma çalışması yapmak
+* [ ] Web tabanlı kullanıcı arayüzü geliştirmek
+* [ ] REST API oluşturmak
+* [ ] Docker ile uygulamayı containerize etmek
+* [ ] Modeli bir cloud ortamında deploy etmek
 
 ---
 
-## 👨‍💻 Yazar
+# 📚 Kaynaklar
 
-**3. Sınıf Bilgisayar Mühendisliği Öğrencisi**  
-NLP Dersi Projesi - 2024
-
----
-
-## 📞 İletişim ve Destek
-
-Sorularınız için:
-- GitHub Issues kullanın
-- NLP dersi hocası ile iletişime geçin
-- Kaggle discussion forumlarını ziyaret edin
+* [BERT — Original Paper](https://arxiv.org/abs/1810.04805)
+* [Hugging Face Transformers](https://huggingface.co/docs/transformers/)
+* [PyTorch Documentation](https://pytorch.org/docs/)
+* [NLTK Documentation](https://www.nltk.org/)
+* [Kaggle](https://www.kaggle.com/)
 
 ---
 
-## ⚡ Hızlı Komutlar Özeti
+# 👩‍💻 Proje Bilgileri
+
+**NLP Dersi Projesi**
+
+**Betül Sarı**
+Computer Engineering Student
+İzmir Katip Çelebi University
+
+---
+
+# ⚡ Hızlı Başlangıç
 
 ```bash
-# Kurulum
-pip install -r requirements.txt
-kaggle datasets download -d saurabhshahane/fake-news-classification
-unzip fake-news-classification.zip -d data/raw/
+# Repository'yi klonla
+git clone https://github.com/betlsari/Fake-News-Detection.git
 
-# Hızlı test (küçük veri)
+# Proje klasörüne gir
+cd Fake-News-Detection
+
+# Virtual environment oluştur
+python -m venv venv
+
+# Windows'ta aktif et
+venv\Scripts\activate
+
+# Kütüphaneleri yükle
+pip install -r requirements.txt
+
+# Küçük veriyle test
 python main.py --mode train --sample_size 1000 --epochs 2
 
 # Tam eğitim
 python main.py --mode train --epochs 3
 
-# Test
+# Modeli test et
 python main.py --mode test
 
-# Tahmin
+# Tahmin yap
 python main.py --mode predict --text "Your news text here"
 ```
 
 ---
 
+## 📌 Not
+
+Bu proje **eğitim ve akademik çalışma amacıyla** geliştirilmiştir. Model çıktıları gerçek dünyadaki haberlerin doğruluğunu kesin olarak belirleyen bir kaynak olarak değerlendirilmemelidir.
